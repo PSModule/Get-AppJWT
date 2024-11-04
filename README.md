@@ -23,7 +23,7 @@ This action gets a JWT token for a GitHub Application.
 <...>
   - name: Get-AppJWT
     id: Get-AppJWT
-    uses: ./
+    uses: PSModule/Get-AppJWT@v1
     with:
       ClientID: ${{ secrets.CLIENT_ID }}
       PrivateKey: ${{ secrets.PRIVATE_KEY }}
