@@ -1,27 +1,31 @@
-name: '{{ NAME }}'
-description: '{{ DESCRIPTION }}'
+name: Get-AppJWT
+description: A GitHub Action that gets a JWT for a GitHub App
 author: PSModule
 branding:
   icon: upload-cloud
   color: white
 
 inputs:
-  working-directory:
-    description: The working directory where Terraform will be executed
-    required: false
-  subject:
-    description: The subject to greet
-    required: false
-    default: World
+  ClientID:
+    description: The Client ID of the GitHub App
+    required: true
+  PrivateKey:
+    description: The Private Key of the GitHub App
+    required: true
+
+outputs:
+  JWT:
+    description: The JWT for the GitHub App
+    value: ${{ steps.Get-AppJWT.outputs.JWT }}
 
 runs:
   using: composite
   steps:
-    - name: '{{ NAME }}'
+    - name: Get-AppJWT
       shell: pwsh
-      working-directory: ${{ inputs.working-directory }}
       env:
-        GITHUB_ACTION_INPUT_subject: ${{ inputs.subject }}
+        GITHUB_ACTION_INPUT_ClientID: ${{ inputs.ClientID }}
+        GITHUB_ACTION_INPUT_PrivateKey: ${{ inputs.PrivateKey }}
       run: |
-        # '{{ NAME }}'
+        # Get-AppJWT
         . "$env:GITHUB_ACTION_PATH\scripts\main.ps1" -Verbose
