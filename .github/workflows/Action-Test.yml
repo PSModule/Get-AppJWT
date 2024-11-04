@@ -33,7 +33,7 @@ jobs:
           JWT: ${{ steps.Action-Test.outputs.JWT }}
         run: |
           # Print the Json Web Token (JWT) to the console
-          Write-Output "JWT: $env:JWT
+          Write-Host "JWT: $env:JWT"
 
       - name: Show result (Get app)
         shell: pwsh
