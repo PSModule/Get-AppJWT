@@ -25,8 +25,8 @@ This action gets a JWT token for a GitHub Application.
     id: Action-Test
     uses: ./
     with:
-      ClientID: ${{ secrets.TEST_CLIENT_ID }}
-      PrivateKey: ${{ secrets.TEST_PRIVATE_KEY }}
+      ClientID: ${{ secrets.CLIENT_ID }}
+      PrivateKey: ${{ secrets.PRIVATE_KEY }}
 ```
 
 ## Links
