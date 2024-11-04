@@ -31,7 +31,7 @@ This action gets a JWT token for a GitHub Application.
   - name: Get app info
     shell: pwsh
     env:
-      JWT: ${{ steps.Action-Test.outputs.JWT }}
+      JWT: ${{ steps.Get-AppJWT.outputs.JWT }}
     run: |
       # Access the GitHub /app endpoint using the JWT as bearer token
       Invoke-RestMethod -Uri "$env:GITHUB_API_URL/app" -Method Get -Headers @{
