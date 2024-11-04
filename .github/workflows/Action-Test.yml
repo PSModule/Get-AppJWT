@@ -28,15 +28,7 @@ jobs:
           ClientID: ${{ secrets.TEST_CLIENT_ID }}
           PrivateKey: ${{ secrets.TEST_PRIVATE_KEY }}
 
-      - name: Show result (print)
-        shell: pwsh
-        env:
-          JWT: ${{ steps.Action-Test.outputs.JWT }}
-        run: |
-          # Print the Json Web Token (JWT) to the console
-          Write-Host "JWT: $env:JWT"
-
-      - name: Show result (Get app)
+      - name: Get app info
         shell: pwsh
         env:
           JWT: ${{ steps.Action-Test.outputs.JWT }}

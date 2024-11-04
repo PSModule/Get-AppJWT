@@ -17,16 +17,26 @@ This action gets a JWT token for a GitHub Application.
 | ------ | ----------- |
 | `JWT` | The JWT for the GitHub App |
 
-### Example
+### Example: Using the JWT to access the GitHub API
 
 ```yaml
 <...>
-  - name: Action-Test
-    id: Action-Test
+  - name: Get-AppJWT
+    id: Get-AppJWT
     uses: ./
     with:
       ClientID: ${{ secrets.CLIENT_ID }}
       PrivateKey: ${{ secrets.PRIVATE_KEY }}
+
+  - name: Get app info
+    shell: pwsh
+    env:
+      JWT: ${{ steps.Action-Test.outputs.JWT }}
+    run: |
+      # Access the GitHub /app endpoint using the JWT as bearer token
+      Invoke-RestMethod -Uri "$env:GITHUB_API_URL/app" -Method Get -Headers @{
+          Authorization = "Bearer $env:JWT"
+      }
 ```
 
 ## Links
