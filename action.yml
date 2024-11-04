@@ -22,10 +22,11 @@ runs:
   using: composite
   steps:
     - name: Get-AppJWT
+      id: Get-AppJWT
       shell: pwsh
       env:
         GITHUB_ACTION_INPUT_ClientID: ${{ inputs.ClientID }}
         GITHUB_ACTION_INPUT_PrivateKey: ${{ inputs.PrivateKey }}
       run: |
         # Get-AppJWT
-        . "$env:GITHUB_ACTION_PATH\scripts\main.ps1" -Verbose
+        . "${{ github.action_path }}\scripts\main.ps1" -Verbose
