@@ -42,5 +42,5 @@ $signature = [Convert]::ToBase64String(
 ).TrimEnd('=').Replace('+', '-').Replace('/', '_')
 
 $jwt = "$header.$payload.$signature"
-Write-Host "::add-mask::$jwt"
+# Write-Host "::add-mask::$jwt"
 "JWT=$jwt" | Out-File -FilePath $env:GITHUB_OUTPUT -Append

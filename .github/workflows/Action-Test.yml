@@ -27,12 +27,20 @@ jobs:
           ClientID: ${{ secrets.TEST_CLIENT_ID }}
           PrivateKey: ${{ secrets.TEST_PRIVATE_KEY }}
 
-      - name: Show result
+      - name: Show result (print)
+        shell: pwsh
+        env:
+          JWT: ${{ steps.Action-Test.outputs.JWT }}
+        run: |
+          # Print the Json Web Token (JWT) to the console
+          Write-Output "JWT: $env:JWT
+
+      - name: Show result (Get app)
         shell: pwsh
         env:
           JWT: ${{ steps.Action-Test.outputs.JWT }}
         run: |
           # Access the GitHub /app endpoint using the JWT as bearer token
-          Invoke-RestMethod -Uri "$env:GITHUB_API_URL/app" -Headers @{
+          Invoke-RestMethod -Uri "$env:GITHUB_API_URL/app" -Method Get -Headers @{
               Authorization = "Bearer $env:JWT"
           }
