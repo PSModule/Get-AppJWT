@@ -22,7 +22,18 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Action-Test
+        id: Action-Test
         uses: ./
         with:
-          working-directory: ./tests
-          subject: PSModule
+          ClientID: ${{ secrets.TEST_CLIENT_ID }}
+          PrivateKey: ${{ secrets.TEST_PRIVATE_KEY }}
+
+      - name: Get app info
+        shell: pwsh
+        env:
+          JWT: ${{ steps.Action-Test.outputs.JWT }}
+        run: |
+          # Access the GitHub /app endpoint using the JWT as bearer token
+          Invoke-RestMethod -Uri "$env:GITHUB_API_URL/app" -Method Get -Headers @{
+              Authorization = "Bearer $env:JWT"
+          }
