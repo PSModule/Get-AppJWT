@@ -2,7 +2,11 @@ name: Action-Test
 
 run-name: "Action-Test - [${{ github.event.pull_request.title }} #${{ github.event.pull_request.number }}] by @${{ github.actor }}"
 
-on: [pull_request]
+on:
+  workflow_dispatch:
+  pull_request:
+  schedule:
+    - cron: '0 0 * * *'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -25,8 +29,8 @@ jobs:
         id: Action-Test
         uses: ./
         with:
-          ClientID: ${{ secrets.TEST_CLIENT_ID }}
-          PrivateKey: ${{ secrets.TEST_PRIVATE_KEY }}
+          ClientID: ${{ secrets.TEST_APP_ORG_CLIENT_ID }}
+          PrivateKey: ${{ secrets.TEST_APP_ORG_PRIVATE_KEY }}
 
       - name: Get app info
         shell: pwsh
