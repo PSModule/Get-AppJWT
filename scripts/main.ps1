@@ -1,11 +1,5 @@
 [CmdletBinding()]
-param (
-    [Parameter()]
-    [string] $ClientID = $env:GITHUB_ACTION_INPUT_ClientID,
-
-    [Parameter()]
-    [string] $PrivateKey = $env:GITHUB_ACTION_INPUT_PrivateKey
-)
+param ()
 
 $header = [Convert]::ToBase64String(
     [System.Text.Encoding]::UTF8.GetBytes(
@@ -24,14 +18,14 @@ $payload = [Convert]::ToBase64String(
             ConvertTo-Json -InputObject @{
                 iat = [System.DateTimeOffset]::UtcNow.AddSeconds(-10).ToUnixTimeSeconds()
                 exp = [System.DateTimeOffset]::UtcNow.AddMinutes(10).ToUnixTimeSeconds()
-                iss = $ClientID
+                iss = $env:GITHUB_ACTION_INPUT_ClientID
             }
         )
     )
 ).TrimEnd('=').Replace('+', '-').Replace('/', '_')
 
 $rsa = [System.Security.Cryptography.RSA]::Create()
-$rsa.ImportFromPem($PrivateKey)
+$rsa.ImportFromPem($env:GITHUB_ACTION_INPUT_PrivateKey)
 
 $signature = [Convert]::ToBase64String(
     $rsa.SignData(

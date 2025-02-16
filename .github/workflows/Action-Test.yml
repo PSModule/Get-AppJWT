@@ -29,8 +29,8 @@ jobs:
         id: Action-Test
         uses: ./
         with:
-          ClientID: ${{ secrets.TEST_CLIENT_ID }}
-          PrivateKey: ${{ secrets.TEST_PRIVATE_KEY }}
+          ClientID: ${{ secrets.TEST_APP_ORG_CLIENT_ID }}
+          PrivateKey: ${{ secrets.TEST_APP_ORG_PRIVATE_KEY }}
 
       - name: Get app info
         shell: pwsh
