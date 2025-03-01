@@ -18,14 +18,14 @@ $payload = [Convert]::ToBase64String(
             ConvertTo-Json -InputObject @{
                 iat = [System.DateTimeOffset]::UtcNow.AddSeconds(-10).ToUnixTimeSeconds()
                 exp = [System.DateTimeOffset]::UtcNow.AddMinutes(10).ToUnixTimeSeconds()
-                iss = $env:GITHUB_ACTION_INPUT_ClientID
+                iss = $env:PSMODULE_GET_APPJWT_INPUT_ClientID
             }
         )
     )
 ).TrimEnd('=').Replace('+', '-').Replace('/', '_')
 
 $rsa = [System.Security.Cryptography.RSA]::Create()
-$rsa.ImportFromPem($env:GITHUB_ACTION_INPUT_PrivateKey)
+$rsa.ImportFromPem($env:PSMODULE_GET_APPJWT_INPUT_PrivateKey)
 
 $signature = [Convert]::ToBase64String(
     $rsa.SignData(
